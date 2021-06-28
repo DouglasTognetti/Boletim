@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    ListAlu
+{% endblock %}
+
+{% block subtitulo %}
+    Lista de Alunos
+{% endblock %}
+
+{% block pesquisa %}
+      <!-- Componente para fazer pesquisa -->
+       <form class="form-inline ml-auto" method="post">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" type="text" placeholder="Nome Completo" name="aluno_input">
+            <button class="btn btn-success" type="submit">Pesquisar</button>
+        </form>
+{% endblock %}
+
+
+{% block main %}
+
+
+    <!-- Componente para mostrar mensagens do CRUD -->
+    {% if messages %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {% for mensagem in messages %}
+                {{ mensagem }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <ul class="list-group">
+        {% for alu in dados %}
+            <li class="list-group-item">
+                Nome: {{ alu.nome }} <br>
+
+                Data Nascimento: {{ alu.dataNascimento }}<br>
+
+                {% if alu.endereco %}
+                    End:{{ alu.endereco }} <br>
+                {% else %}
+                    End: <br>
+                {% endif %}
+
+                {% if alu.complemento %}
+                     Comp:{{ alu.complemento }} <br>
+                {% else %}
+                     Comp: <br>
+                {% endif %}
+
+                {% if alu.bairro %}
+                     Bairro:{{ alu.bairro }} <br>
+                {% else %}
+                     Bairro: <br>
+                {% endif %}
+
+                {% if alu.cidade %}
+                     Cidade:{{ alu.cidade }} <br>
+                {% else %}
+                     Cidade: <br>
+                {% endif %}
+
+                {% if alu.cep %}
+                     CEP:{{ alu.cep }} <br>
+                {% else %}
+                     CEP: <br>
+                {% endif %}
+
+
+                {% if alu.telefone %}
+                     Telefone:{{ alu.telefone }}<br>
+                {% else %}
+                     Telefone: <br>
+                {% endif %}
+
+                {% if alu.foto %}
+                    <img src="{{ alu.foto.url }}" width="150"> <br>
+                {% else %}
+                    <img src="{% static 'img/aluno_generico.jpg' %}" width="150">  <br>
+                {% endif %}
+
+                <a class="btn btn-primary" href="{% url 'url_atualiza_aluno' alu.id %}">Atualizar</a>  &nbsp
+                <a class="btn btn-danger" href="{% url 'url_exclui_aluno' alu.id %}">Excluir</a> <br>
+
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

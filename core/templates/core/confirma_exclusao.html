@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+    Confirmação
+{% endblock %}
+
+{% block main %}
+    <h3>Deseja realmente excluir o registro?: {{ dados }} - codigo = {{ id }}</h3>
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">SIM</button> &nbsp;
+        <button type="button" class="btn btn-danger" onclick="location.href='{% url url %}'">NÃO</button>
+    </form>
+
+{% endblock %}

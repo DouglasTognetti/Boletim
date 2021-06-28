@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    ListRes
+{% endblock %}
+
+{% block subtitulo %}
+    Lista de Resultados
+{% endblock %}
+
+{% block pesquisa %}
+      <!-- Componente para fazer pesquisa -->
+       <form class="form-inline ml-auto" method="post">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" type="text" placeholder="Nome Completo" name="resultado_input">
+            <button class="btn btn-success" type="submit">Pesquisar</button>
+        </form>
+{% endblock %}
+
+
+{% block main %}
+    <!-- Componente para mostrar mensagens do CRUD -->
+    {% if messages %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {% for mensagem in messages %}
+                {{ mensagem }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <ul class="list-group">
+
+        {% for res in dados %}
+
+           <div class="container"  >
+               <h2></h2>
+                <table class="table table-bordered ">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Turma</th>
+                        <th>Matéria</th>
+                        <th>Nota 1</th>
+                        <th>Faltas 1</th>
+                        <th>Nota 2</th>
+                        <th>Faltas 2</th>
+                        <th>Nota 3</th>
+                        <th>Faltas 3</th>
+                        <th>Nota 4</th>
+                        <th>Faltas 4</th>
+                        <th>Nota Final </th>
+                        <th>Situação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                         <td>{{ res.idAluno.nome }}</td>
+                         <td>{{ res.idAluno.idTurma }}</td>
+                         <td>{{ res.idMateria }}</td>
+                         <td>
+                             {% if res.nota1 %}
+                            {{ res.nota1 }}
+                            {% else %}
+                             -
+                            {% endif %}
+                         </td>
+                        <td>
+                            {% if res.faltas1 %}
+                           {{ res.faltas1 }}
+                           {% else %}
+                           -
+                           {% endif %}
+                        </td>
+                        <td>
+                             {% if res.nota2 %}
+                            {{ res.nota2 }}
+                            {% else %}
+                             -
+                            {% endif %}
+                         </td>
+                        <td>
+                           {% if res.faltas2 %}
+                           {{ res.faltas2 }}
+                           {% else %}
+                           -
+                           {% endif %}
+                        </td>
+                        <td>
+                            {% if res.nota3 %}
+                            {{ res.nota3 }}
+                            {% else %}
+                             -
+                            {% endif %}
+                         </td>
+                        <td>
+                           {% if res.faltas3 %}
+                           {{ res.faltas3 }}
+                           {% else %}
+                           -
+                           {% endif %}
+                        </td>
+                       <td>
+                            {% if res.nota4 %}
+                            {{ res.nota4 }}
+                            {% else %}
+                             -
+                            {% endif %}
+                         </td>
+                       <td>
+                           {% if res.faltas4 %}
+                           {{ res.faltas4 }}
+                           {% else %}
+                           -
+                           {% endif %}
+                        </td>
+                        <td>{{ res.notaFinal }}</td>
+                        <td>
+                            {% if res.aprovado == True %}
+                                Aprovado
+                            {% else %}
+                                Reprovado
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                </table>
+                <a class="btn btn-primary" href="{% url 'url_atualiza_resultado' res.id %}">Atualizar</a>  &nbsp
+                <a class="btn btn-danger" href="{% url 'url_exclui_resultado' res.id %}">Excluir</a> <br>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
